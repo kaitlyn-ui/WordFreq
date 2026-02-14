@@ -1,5 +1,5 @@
-public class BuildMaxHeap <T extends Comparable <T>>{
-    private T[] heap;
+public class BuildMaxHeap{
+    /*private T[] heap;
     private int size; //size of heap
     private final int capacity; //capacity
 
@@ -7,6 +7,12 @@ public class BuildMaxHeap <T extends Comparable <T>>{
         this.size = 0;
         this.capacity = capacity;
         heap = (T[]) new Comparable[capacity];
+    }*/
+    public static void buildMaxHeap(WordFreq[] arr){
+        int l = arr.length;
+        for(int i = l/2-1; i >=0; i--){
+            heapify(arr, l ,i);
+        }
     }
 
     //return parent position
@@ -25,37 +31,31 @@ public class BuildMaxHeap <T extends Comparable <T>>{
     }
 
 
-
     //swap two nodes
-    private void swap(int a, int b){
-        T temp = heap[a];
-        heap[a] = heap[b];
-        heap[b] = temp;
+    private static void swap(WordFreq[] arr, int a, int b){
+        WordFreq temp = arr[a];
+        arr[a] = arr[b];
+        arr[b] = temp;
     }
 
     //add new value into the heap
-    public void addNode(T value){
-        //inserts the new value
-        heap[size] = value;
-        int i = size;
-        T temp;
-        int parentIndex;
+    public static void heapify(WordFreq[] arr, int index, int size){
+        int largest = index;
+        int left = index * 2 + 1;
+        int right = index * 2 + 2;
 
-        //
-        while(i > 0){
-            parentIndex = getParentIndex(i);
-            //compares parent and current node, swaps up if priority is higher
-            if(heap[parentIndex].compareTo(heap[i]) >= 0){
-                temp = heap[parentIndex];
-                heap[parentIndex] = heap[i];
-                heap[i] = temp;
-            }else{
-                break;
-            }
-            i = parentIndex;
+        if(left < size && arr[left].getFreq() > arr[largest].getFreq()){
+            largest = left;
         }
 
-        size++;
+        if(right < size && arr[right].getFreq() > arr[largest].getFreq()){
+            largest = right;
+        }
+
+        if(largest != index){
+            swap(arr, index, largest);
+            heapify(arr, size, largest);
+        }
 
     }
 
