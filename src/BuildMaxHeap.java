@@ -1,20 +1,14 @@
 public class BuildMaxHeap{
-    /*private T[] heap;
-    private int size; //size of heap
-    private final int capacity; //capacity
 
-    public BuildMaxHeap(int capacity){
-        this.size = 0;
-        this.capacity = capacity;
-        heap = (T[]) new Comparable[capacity];
-    }*/
     public static void buildMaxHeap(WordFreq[] arr){
         int l = arr.length;
-        for(int i = l/2-1; i >=0; i--){
-            heapify(arr, l ,i);
+        //last non-leaf node
+        for(int i = (l/2)-1; i >=0; i--){
+            heapify(arr, i, l); //heapify nodes
         }
     }
 
+    //not used in current program
     //return parent position
     private int getParentIndex(int position){
         return (position - 1) / 2;
@@ -38,23 +32,24 @@ public class BuildMaxHeap{
         arr[b] = temp;
     }
 
-    //add new value into the heap
+
     public static void heapify(WordFreq[] arr, int index, int size){
         int largest = index;
         int left = index * 2 + 1;
         int right = index * 2 + 2;
 
+        //check if left node is greater than root
         if(left < size && arr[left].getFreq() > arr[largest].getFreq()){
             largest = left;
         }
-
+        //check if right node is greater than root
         if(right < size && arr[right].getFreq() > arr[largest].getFreq()){
             largest = right;
         }
-
+        //if largest element is not the root, swap the nodes and call heapify
         if(largest != index){
             swap(arr, index, largest);
-            heapify(arr, size, largest);
+            heapify(arr, largest, size);
         }
 
     }

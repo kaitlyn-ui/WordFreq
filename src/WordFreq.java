@@ -25,6 +25,11 @@ public class WordFreq {
         this.frequency = newFreq;
     }
 
+    @Override
+    public String toString(){
+        return "Phrase: " + word + ", Frequency: " + frequency;
+    }
+
 
 
 
